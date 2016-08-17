@@ -8,7 +8,7 @@ const fs =  require('fs')
 const path =  require('path')
 const log = log4js.getLogger(__filename.replace(__dirname, ""))
 
-const  DEFAULT_CONCURRENCE_SIZE = 20
+const  DEFAULT_CONCURRENCE_SIZE = 10
 const  DEFAULT_TIMEOUTS = 5000
 class LimitRequestUtil {
     /*static  DEFAULT_CONCURRENCE_SIZE : 20
