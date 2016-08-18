@@ -170,7 +170,7 @@ taskList.push(leaguePoolTask)*/
  */
 const matchListTask = {
     taskFunc: () => {
-        const now = new Date('2015-07-18').getTime()
+        const now = new Date('2016-01-01').getTime()
 
         db.get("league")
             .filter(league => {
@@ -283,7 +283,14 @@ function _getSeriesType(seriesType) {
     return stMap[seriesType + ""]
 }
 
+
+const _handlerMatchDetail = (matchDetail) => {
+
+}
+
 taskList.push(matchListTask)
+
+
 
 MainTasks.initStart()
 //module.exports = MainTasks

@@ -1,4 +1,5 @@
 {
   "webKey":  "6515B089779D631CD61B8599622FE7FC",
-  "liveLeaugeList": []
+  "liveLeaugeList": [],
+  "staticHost": "http://192.168.1.120:3000"
 }
