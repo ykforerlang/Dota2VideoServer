@@ -194,10 +194,11 @@ const _handlerMatchRes = (leagueid, err, res, body) => {
         body = JSON.parse(body)
         if (!body.result || !body.result.matches) return
         const matches = body.result.matches
+        if (matches.length <= 0) return
         const lastMatchId = matches[matches.length - 1].match_id
 
         if(body.result.results_remaining != 0) {
-            limitReq.submitTask(`http://api.steampowered.com/IDOTA2Match_570/GetMatchHistory/v001/?key=${resources.webKey}&league_id=${league.league_id}&matches_requested=100&start_at_match_id=${lastMatchId}`,
+            limitReq.submitTask(`http://api.steampowered.com/IDOTA2Match_570/GetMatchHistory/v001/?key=${resources.webKey}&league_id=${leagueid}&matches_requested=100&start_at_match_id=${lastMatchId}`,
                 _handlerMatchRes.bind(null, leagueid))
         }
         _handlerMatches(leagueid, body.result.matches)
