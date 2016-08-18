@@ -11,43 +11,44 @@ const _ = require('lodash')
 
 limitReq.submitTask('http://api.steampowered.com/IDOTA2Match_570/GetMatchDetails/v1/?key=6515B089779D631CD61B8599622FE7FC&match_id=2469377521',
     (err, res, body) => {
-        body = JSON.parse(body)
-        const bodyDetail = body.result
-        const matchDetail = {}
-        const players = bodyDetail.players.map((ele) => {
-            const result = {}
-            result.accountId = ele.account_id
-            const player = playerBriefs[ele.account_id]
-            result.name = player ? player.personaname : 'unkown'
-            result.itemList = [ele.item_0, ele.item_1, ele.item_2, ele.item_3, ele.item_4, ele.item_5]
-            result.kills = ele.kills
-            result.deaths = ele.deaths
-            result.assists = ele.assists
-            result.xpm = ele.xp_per_min
-            result.gpm = ele.gold_per_min
-            result.level = ele.level
-            result.gold = ele.gold + ele.gold_spent
-            result.towerDamage = ele.tower_damage
-            result.heroDamage = ele.hero_damage
-            result.healing = ele.hero_healing
-            result.icon = resources.staticHost + "/images/player/" + ele.account_id + ".jpg"
-            return result
-        })
-        _handlerTotalRate('gold', players)
-        _handlerTotalRate('towerDamage', players)
-        _handlerTotalRate('heroDamage', players)
-        _handlerTotalRate('healing', players)
-        matchDetail.players = players
-        matchDetail.winner = bodyDetail.radiant_win ? '天辉' : '夜魇'
-        matchDetail.matchId = bodyDetail.match_id
-        matchDetail.duration = _getTimeFromSecond(bodyDetail.duration)
-        matchDetail.radiantScore = bodyDetail.radiant_score
-        matchDetail.direScore = bodyDetail.dire_score
-        matchDetail.radiantTeam = _getTeamTag(bodyDetail.radiant_team_id)
-        matchDetail.direTeam = _getTeamTag(bodyDetail.dire_team_id)
-
-        console.log(matchDetail)
+        _handlerMatchDetail(body)
     })
+function _handlerMatchDetail(body) {
+    body = JSON.parse(body)
+    const bodyDetail = body.result
+    const matchDetail = {}
+    const players = bodyDetail.players.map((ele) => {
+        const result = {}
+        result.accountId = ele.account_id
+        const player = playerBriefs[ele.account_id]
+        result.name = player ? player.personaname : 'unkown'
+        result.itemList = [ele.item_0, ele.item_1, ele.item_2, ele.item_3, ele.item_4, ele.item_5]
+        result.kills = ele.kills
+        result.deaths = ele.deaths
+        result.assists = ele.assists
+        result.xpm = ele.xp_per_min
+        result.gpm = ele.gold_per_min
+        result.level = ele.level
+        result.gold = ele.gold + ele.gold_spent
+        result.towerDamage = ele.tower_damage
+        result.heroDamage = ele.hero_damage
+        result.healing = ele.hero_healing
+        result.icon = resources.staticHost + "/images/player/" + ele.account_id + ".jpg"
+        return result
+    })
+    _handlerTotalRate('gold', players)
+    _handlerTotalRate('towerDamage', players)
+    _handlerTotalRate('heroDamage', players)
+    _handlerTotalRate('healing', players)
+    matchDetail.players = players
+    matchDetail.winner = bodyDetail.radiant_win ? '天辉' : '夜魇'
+    matchDetail.matchId = bodyDetail.match_id
+    matchDetail.duration = _getTimeFromSecond(bodyDetail.duration)
+    matchDetail.radiantScore = bodyDetail.radiant_score
+    matchDetail.direScore = bodyDetail.dire_score
+    matchDetail.radiantTeam = _getTeamTag(bodyDetail.radiant_team_id)
+    matchDetail.direTeam = _getTeamTag(bodyDetail.dire_team_id)
+}
 
 function _handlerTotalRate(key, playerList) {
     const radiantTotal = _handlerTotal(key, playerList, 0)
