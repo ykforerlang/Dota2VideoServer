@@ -24,7 +24,7 @@ class LimitRequestUtil {
 
     // 如果现在的 访问数小于size， 直接访问， 否则放到队列
     submitTask(url, cb) {
-        log.info("submit a task:", url)
+        log.info("submit a task:", url, " nowSize:", this.nowSize, " queueSize:", this.taskQueue.length)
         let self = this
 
         if (this.nowSize < this.concurrence_size) {

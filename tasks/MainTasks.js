@@ -9,7 +9,7 @@
  */
 "use strict";
 const LimitRequestUtil = require('../utils/LimitRequestUtil')
-const limitReq = new LimitRequestUtil({concurrence_size:5})
+const limitReq = new LimitRequestUtil({concurrence_size: 5})
 const fetch = require('node-fetch')
 const request = require('request')
 const resources = require('../conf/resources.json')
@@ -20,7 +20,6 @@ const _ = require('lodash')
 const moment = require('moment')
 const playerBriefs = require('../conf/playerBriefs.json')
 const teamBriefs = require('../conf/teamBriefs.json')
-
 
 
 const taskList = []
@@ -38,94 +37,95 @@ class MainTasks {
  *url: https://api.steampowered.com/IDOTA2Match_570/GetLeagueListing/v1/?key={}&language=zh_cn
  * @type {{taskFunc: leagueTask.taskFunc, taskPoolTime: number}}
  */
-/*const leagueTask = {
- taskFunc: () => {
- const url = `https://api.steampowered.com/IDOTA2Match_570/GetLeagueListing/v1/?key=${resources.webKey}&language=zh_cn`
- fetch(url)
- .then((res) => {
- return res.json()
- })
- .then((res) => {
- const list = res.result.leagues
- for (let i = 0; i < list.length; i++) {
- const league = leagueDb.get('league')
- .find({leagueid: list[i].leagueid})
- .value()
- if (!league) {
- leagueDb.get('league')
- .push(list[i])
- .value()
- console.log("push a leauge", list[i].leagueid)
- } else {
- console.log("league", list[i].leagueid, " already exsit!")
- }
- }
+const leagueTask = {
+    taskFunc: () => {
+        const url = `https://api.steampowered.com/IDOTA2Match_570/GetLeagueListing/v1/?key=${resources.webKey}&language=zh_cn`
+        fetch(url)
+            .then((res) => {
+                return res.json()
+            })
+            .then((res) => {
+                    const list = res.result.leagues
+                    for (let i = 0; i < list.length; i++) {
+                        const league = leagueDb.get('league')
+                            .find({leagueid: list[i].leagueid})
+                            .value()
+                        if (!league) {
+                            leagueDb.get('league')
+                                .push(list[i])
+                                .value()
+                            console.log("push a leauge", list[i].leagueid)
+                        } else {
+                            console.log("league", list[i].leagueid, " already exsit!")
+                        }
+                    }
 
- }
- )
- .catch(err => {
- console.warn("fetch ", url, ' error ', err)
- })
- },
+                }
+            )
+            .catch(err => {
+                console.warn("fetch ", url, ' error ', err)
+            })
+    },
 
- taskPoolTime: 24 * 60 * 60 * 1000,
- }
- taskList.push(leagueTask)*/
-/*const leagueTask2 = {
- taskFunc: () => {
- const url = `http://api.steampowered.com/IEconItems_570/GetSchemaURL/v1?key=${resources.webKey}`
- fetch(url)
- .then(res => {
- return res.json()
- })
- .then(res => {
- const gameFileUrl = res.result.items_game_url
- const itemsGamePath= "../conf/__itemsGame.txt"
- fs.unlink(itemsGamePath, () => {
- const stream = request(gameFileUrl)
- stream.pipe(fs.createWriteStream(itemsGamePath))
- stream.on("end", () => {
- fs.readFile("../conf/__itemsGame.txt", function(err, data) {
- _handleGameFile(data)
- })
- })
- })
- })
- .catch(err => {
- console.warn("fetch ", url, ' error')
- })
- },
- taskPoolTime: 72 * 60 * 60 * 1000,
- }
- const _handleGameFile = (data) => {
- const result = kvn.decode(data.toString())
- const items = result.items_game.items
- const leaguemap = leagueDb.get('league')
- .map('itemdef')
- .value()
- _.forEach(leaguemap, (value) => {
- const ele = items[value + ""]
- if (!ele || !ele.tool) return
- const usage = ele.tool.usage
- if (! usage) return
- const prizePoolStopTime = usage.prize_pool ? usage.prize_pool.stop_sales_time : 0
- leagueDb.get('league')
- .find({itemdef:value})
- .assign({imageInventory:ele.image_inventory,
- tier : usage.tier,
- freeToSpectate: usage.free_to_spectate,
- startDate : usage.start_date,
- endDate : usage.end_date,
- prizePoolStopTime,
- })
- .value()
- })
+    taskPoolTime: 24 * 60 * 60 * 1000,
+}
+//taskList.push(leagueTask)
+const leagueTask2 = {
+    taskFunc: () => {
+        const url = `http://api.steampowered.com/IEconItems_570/GetSchemaURL/v1?key=${resources.webKey}`
+        fetch(url)
+            .then(res => {
+                return res.json()
+            })
+            .then(res => {
+                const gameFileUrl = res.result.items_game_url
+                const itemsGamePath = "../conf/__itemsGame.txt"
+                fs.unlink(itemsGamePath, () => {
+                    const stream = request(gameFileUrl)
+                    stream.pipe(fs.createWriteStream(itemsGamePath))
+                    stream.on("end", () => {
+                        fs.readFile("../conf/__itemsGame.txt", function (err, data) {
+                            _handleGameFile(data)
+                        })
+                    })
+                })
+            })
+            .catch(err => {
+                console.warn("fetch ", url, ' error')
+            })
+    },
+    taskPoolTime: 72 * 60 * 60 * 1000,
+}
+const _handleGameFile = (data) => {
+    const result = kvn.decode(data.toString())
+    const items = result.items_game.items
+    const leaguemap = leagueDb.get('league')
+        .map('itemdef')
+        .value()
+    _.forEach(leaguemap, (value) => {
+        const ele = items[value + ""]
+        if (!ele || !ele.tool) return
+        const usage = ele.tool.usage
+        if (!usage) return
+        const prizePoolStopTime = usage.prize_pool ? usage.prize_pool.stop_sales_time : 0
+        leagueDb.get('league')
+            .find({itemdef: value})
+            .assign({
+                imageInventory: ele.image_inventory,
+                tier: usage.tier,
+                freeToSpectate: usage.free_to_spectate,
+                startDate: usage.start_date,
+                endDate: usage.end_date,
+                prizePoolStopTime,
+            })
+            .value()
+    })
 
 
- }
- taskList.push(leagueTask2)*/
+}
+//taskList.push(leagueTask2)
 
-/*const leaguePoolTask = {
+const leaguePoolTask = {
     taskFunc: () => {
         const url = 'http://api.steampowered.com/IEconDOTA2_570/GetTournamentPrizePool/v1?key=577A366039269967223A15C59EDE6D3B&leagueid=2733'
         const now = new Date().getTime()
@@ -154,7 +154,7 @@ class MainTasks {
 
     taskPoolTime: 30 * 60 * 1000,
 }
-taskList.push(leaguePoolTask)*/
+//taskList.push(leaguePoolTask)
 
 /**
  * 根据赛事id  获取比赛列表
@@ -175,12 +175,14 @@ const matchListTask = {
         leagueDb.get("league")
             .filter(league => {
                 if (!league.endDate || !league.tier) return false
+                if (leagueMatchDb.get(league.leagueid + "").value()) return false
 
                 if (league.tier == 'premium') return true
                 if (league.tier == 'professional' && league.endDate * 1000 >= new Date('2015-07-18').getTime()) return true
-                if (league.tier == 'amateur' && league.endDate * 1000 >= new Date('2015-06-18').getTime()) return true
+                if (league.tier == 'amateur' && league.endDate * 1000 >= new Date('2016-01-18').getTime()) return true
             })
             .map(league => {
+                console.log(league.leagueid)
                 limitReq.submitTask(`http://api.steampowered.com/IDOTA2Match_570/GetMatchHistory/v001/?key=${resources.webKey}&league_id=${league.leagueid}&matches_requested=100`,
                     _handlerMatchRes.bind(null, league.leagueid))
             })
@@ -197,7 +199,7 @@ const _handlerMatchRes = (leagueid, err, res, body) => {
         try {
             body = JSON.parse(body)
         } catch (err) {
-            errorDb.get('error').push({"matchListError" : leagueid})
+            errorDb.get('error').push({"matchListError": leagueid})
             return
         }
 
@@ -206,7 +208,7 @@ const _handlerMatchRes = (leagueid, err, res, body) => {
         if (matches.length <= 0) return
         const lastMatchId = matches[matches.length - 1].match_id
 
-        if(body.result.results_remaining != 0) {
+        if (body.result.results_remaining != 0) {
             limitReq.submitTask(`http://api.steampowered.com/IDOTA2Match_570/GetMatchHistory/v001/?key=${resources.webKey}&league_id=${leagueid}&matches_requested=100&start_at_match_id=${lastMatchId}`,
                 _handlerMatchRes.bind(null, leagueid))
         }
@@ -222,7 +224,7 @@ function integrateMatch(leagueid, matches) {
     let data = []
     for (let i = 0; i < matches.length;) {
         let match = matches[i]
-        let matchesEnrich =  [enrichmentMatch(leagueid, match, 0)]
+        let matchesEnrich = [enrichmentMatch(leagueid, match, 0)]
         if (match.series_type != 0) { //series
             let seriesId = match.series_id
             for (var j = 1; j < 10; j++) {
@@ -239,6 +241,7 @@ function integrateMatch(leagueid, matches) {
         } else {
             i = i + 1
         }
+        matchesEnrich = _.compact(matchesEnrich)
         matchesEnrich.reverse()
         data = data.concat(matchesEnrich)
     }
@@ -256,21 +259,21 @@ function integrateMatch(leagueid, matches) {
 
 function enrichmentMatch(leagueid, match, index) {
     let {match_id, start_time, players,  series_type, radiant_team_id, dire_team_id} = match
-    const type =_getSeriesType(series_type) + "/" + (index + 1)
+    const type = _getSeriesType(series_type) + "/" + (index + 1)
     let heroes = players.map((ele) => ele.hero_id)
     if (heroes.length != 10) return
     const startDate = new moment(start_time * 1000)
 
-   /* if (!leagueDb.get('matchDetail').get(match_id + "").value()) {
-        limitReq.submitTask(`http://api.steampowered.com/IDOTA2Match_570/GetMatchDetails/v1/?key=${resources.webKey}&match_id=${match_id}`,
-            (err, res, body) => {
-                if (err) {
-                    console.log("err:", err)
-                } else {
-                    _handlerMatchDetail(body, leagueid, match_id)
-                }
-            })
-    }*/
+    /* if (!leagueDb.get('matchDetail').get(match_id + "").value()) {
+     limitReq.submitTask(`http://api.steampowered.com/IDOTA2Match_570/GetMatchDetails/v1/?key=${resources.webKey}&match_id=${match_id}`,
+     (err, res, body) => {
+     if (err) {
+     console.log("err:", err)
+     } else {
+     _handlerMatchDetail(body, leagueid, match_id)
+     }
+     })
+     }*/
     return {
         heroes,
         matchId: match_id,
@@ -299,13 +302,15 @@ function _getSeriesType(seriesType) {
 //taskList.push(matchListTask)
 
 
-/// 处理match detail
+/// 处理match detail   第一次初始化的时候用来初始化 历史数据，只使用一次
 function tmpMatchDetail() {
     leagueMatchDb.forEach((value, key) => {
+
         _.forEach(value, (match) => {
-            if (!match || !match.matchId ) return
+           if (!match || !match.matchId) return
             const index = match.matchId % 10
-            if (matchDetailDb[index].get(match.matchId  + "").value()) return
+            if (matchDetailDb[index].get(match.matchId + "").value())
+                return
             limitReq.submitTask(`http://api.steampowered.com/IDOTA2Match_570/GetMatchDetails/v1/?key=${resources.webKey}&match_id=${match.matchId}`,
                 (err, res, body) => {
                     if (err) {
@@ -323,12 +328,12 @@ tmpMatchDetail()
 function _handlerMatchDetail(body, matchid) {
     try {
         body = JSON.parse(body)
-        if(body.result.players.length != 10) {
+        if (body.result.players.length != 10) {
             throw "res error"
         }
     } catch (err) {
         errorDb.get("error")
-            .push({"matchDetailError":matchid})
+            .push({"matchDetailError": matchid})
             .value()
         console.log("err body:", body)
         return
@@ -404,7 +409,6 @@ function _getTimeFromSecond(duration) {
 
     return (hour ? hour + "时" : '') + (min + "分") + (second + "秒")
 }
-
 
 
 MainTasks.initStart()
