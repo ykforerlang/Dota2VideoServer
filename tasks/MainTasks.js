@@ -323,7 +323,24 @@ function tmpMatchDetail() {
     }).value()
 
 }
-tmpMatchDetail()
+//tmpMatchDetail()
+
+/// 处理丢掉的lastHits /denies, 修正Rate
+function tmpLastHitsAndRate() {
+    matchDetailDb[0].forEach((value, key) => {
+        limitReq.submitTask(`http://api.steampowered.com/IDOTA2Match_570/GetMatchDetails/v1/?key=${resources.webKey}&match_id=${match.matchId}`,
+            (err, res, body) => {
+                if (err) {
+                    console.log("err:", err)
+                } else {
+                    _handlerMatchDetail(body, match.matchId)
+                }
+            })
+
+    }).value()
+}
+
+
 
 function _handlerMatchDetail(body, matchid) {
     try {
