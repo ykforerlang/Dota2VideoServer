@@ -340,7 +340,7 @@ function tmpLastHitsAndRate() {
 
     }).value()
 }
-tmpLastHitsAndRate()
+//tmpLastHitsAndRate()
 
 
 
