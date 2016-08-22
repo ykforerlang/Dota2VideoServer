@@ -327,18 +327,20 @@ function tmpMatchDetail() {
 
 /// 处理丢掉的lastHits /denies, 修正Rate
 function tmpLastHitsAndRate() {
-    matchDetailDb[0].forEach((value, key) => {
-        limitReq.submitTask(`http://api.steampowered.com/IDOTA2Match_570/GetMatchDetails/v1/?key=${resources.webKey}&match_id=${match.matchId}`,
+    errorDb.get("error").forEach((value) => {
+        const matchId = value.matchDetailError
+        limitReq.submitTask(`http://api.steampowered.com/IDOTA2Match_570/GetMatchDetails/v1/?key=${resources.webKey}&match_id=${matchId}`,
             (err, res, body) => {
                 if (err) {
                     console.log("err:", err)
                 } else {
-                    _handlerMatchDetail(body, match.matchId)
+                    _handlerMatchDetail(body, matchId)
                 }
             })
 
     }).value()
 }
+tmpLastHitsAndRate()
 
 
 
@@ -349,7 +351,7 @@ function _handlerMatchDetail(body, matchid) {
             throw "res error"
         }
     } catch (err) {
-        errorDb.get("error")
+        errorDb.get("error2")
             .push({"matchDetailError": matchid})
             .value()
         console.log("err body:", body)
@@ -374,6 +376,10 @@ function _handlerMatchDetail(body, matchid) {
         result.towerDamage = ele.tower_damage
         result.heroDamage = ele.hero_damage
         result.healing = ele.hero_healing
+
+        result.lastHits = ele.last_hits
+        result.denies = ele.denies
+
         const iconPart = player ? ele.account_id : "default"
         result.icon = "players/" + iconPart + ".jpg"
         return result
@@ -399,6 +405,7 @@ function _handlerMatchDetail(body, matchid) {
     const index = matchid % 10
     matchDetailDb[index].set(matchid + "", matchDetail)
         .value()
+    //console.log(matchDetail)
 }
 
 function _handlerTotalRate(key, playerList) {
@@ -416,7 +423,7 @@ function _handlerTotal(key, playerList, start) {
 }
 function _setTotalRate(key, playerList, start, total) {
     for (let i = start; i < start + 5; i++) {
-        playerList[i][key + 'Rate'] = _.round(playerList[i][key] / total, 3)
+        playerList[i][key + 'Rate'] = Math.round(playerList[i][key] / total * 1000) / 10 + "%"
     }
 }
 function _getTimeFromSecond(duration) {

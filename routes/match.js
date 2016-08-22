@@ -18,4 +18,9 @@ router.get("/detail", (req, res) => {
     res.json(detail)
 })
 
+router.get("/video", (req, res) => {
+    //TODO
+    res.json("<iframe height=498 width=510 src='http://player.youku.com/embed/XMTY4NDA5MjgwMA==' frameborder=0 'allowfullscreen'></iframe>")
+})
+
 module.exports = router;
