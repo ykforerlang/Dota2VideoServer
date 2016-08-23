@@ -19,6 +19,10 @@ const matchDetailDb08 = lowdb('../conf/__matchDetailDb08.json', {storage: requir
 const matchDetailDb09 = lowdb('../conf/__matchDetailDb09.json', {storage: require('lowdb/lib/file-async')})
 const matchDetailDb10 = lowdb('../conf/__matchDetailDb10.json', {storage: require('lowdb/lib/file-async')})
 
+const videoDb = lowdb('../conf/__videoDb.json', {storage: require('lowdb/lib/file-async')})
+videoDb.defaults({video: []})
+    .value()
+
 const errorDb = lowdb('../conf/__errorDb.json', {storage: require('lowdb/lib/file-async')})
 errorDb.defaults({error: []})
     .value()
@@ -28,5 +32,6 @@ module.exports = {
     leagueMatchDb,
     matchDetailDb: [matchDetailDb01, matchDetailDb02, matchDetailDb03, matchDetailDb04, matchDetailDb05, matchDetailDb06,
         matchDetailDb07, matchDetailDb08, matchDetailDb09, matchDetailDb10],
-    errorDb
+    errorDb,
+    videoDb
 }
