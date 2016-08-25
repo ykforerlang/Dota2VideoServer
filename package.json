@@ -11,6 +11,8 @@
     "debug": "~2.2.0",
     "express": "~4.13.4",
     "jade": "~1.11.0",
+    "jquery": "^3.1.0",
+    "jsdom": "^9.4.2",
     "keyvalues-node": "0.0.2",
     "lodash": "^4.14.2",
     "log4js": "^0.6.38",
