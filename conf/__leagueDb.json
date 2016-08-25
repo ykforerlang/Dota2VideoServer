@@ -47,7 +47,7 @@
       "tier": "premium",
       "prizePoolStopTime": 0,
       "matches": [],
-      "icon": "league/2.png"
+      "icon": "league/default.png"
     },
     {
       "name": "外卡赛东方赛区",
@@ -59,7 +59,7 @@
       "tier": "premium",
       "prizePoolStopTime": 0,
       "matches": [],
-      "icon": "league/3.png"
+      "icon": "league/default.png"
     },
     {
       "name": "The Defense联赛",
@@ -204,7 +204,7 @@
       "tier": "premium",
       "prizePoolStopTime": 0,
       "matches": [],
-      "icon": "league/65001.png"
+      "icon": "league/default.png"
     },
     {
       "name": "RaidCall Dota 2联赛",
@@ -564,7 +564,7 @@
       "tier": "premium",
       "prizePoolStopTime": 0,
       "matches": [],
-      "icon": "league/65004.png"
+      "icon": "league/default.png"
     },
     {
       "name": "国际邀请赛西方资格赛",
@@ -576,7 +576,7 @@
       "tier": "premium",
       "prizePoolStopTime": 0,
       "matches": [],
-      "icon": "league/65005.png"
+      "icon": "league/default.png"
     },
     {
       "name": "Curse Dota 2邀请赛",
@@ -756,7 +756,7 @@
       "tier": "premium",
       "prizePoolStopTime": 0,
       "matches": [],
-      "icon": "league/65006.png"
+      "icon": "league/default.png"
     },
     {
       "name": "CDEC第2-4赛季",
@@ -4454,7 +4454,7 @@
       "prizePoolStopTime": "1406613600",
       "prizePool": 10923977,
       "matches": [],
-      "icon": "league/600.png"
+      "icon": "league/default.png"
     },
     {
       "name": "马其顿Dota 2联赛第4赛季",
@@ -16029,7 +16029,7 @@
       "endDate": "1454227200",
       "prizePoolStopTime": 0,
       "matches": [],
-      "icon": "league/4329.png"
+      "icon": "league/default.png"
     },
     {
       "name": "2016年TELKOMFEST联赛",
