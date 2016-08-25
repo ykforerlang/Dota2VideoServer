@@ -15,7 +15,11 @@ router.get("/detail", (req, res) => {
     const index = parseInt(matchId) % 10
     console.log(index)
     const detail = matchDetailDb[index].get(matchId).value()
-    res.json(detail)
+
+    res.json({
+        detail,
+        videoRes: "<iframe height=498 width=510 src='http://player.youku.com/embed/XMTY4NDA5MjgwMA==' frameborder=0 'allowfullscreen'></iframe>"
+    })
 })
 
 router.get("/video", (req, res) => {
