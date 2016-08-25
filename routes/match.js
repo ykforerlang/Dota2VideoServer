@@ -6,7 +6,7 @@
 const express = require('express')
 const log4js = require('log4js')
 const router = express.Router();
-const {matchDetailDb} = require('../service/db')
+const {matchDetailDb, videoDb} = require('../service/db')
 
 
 router.get("/detail", (req, res) => {
@@ -15,16 +15,11 @@ router.get("/detail", (req, res) => {
     const index = parseInt(matchId) % 10
     console.log(index)
     const detail = matchDetailDb[index].get(matchId).value()
+    const videoJson = videoDb.get('video').find({matchId:parseInt(matchId)}).value()
 
     res.json({
         detail,
-        videoRes: "<iframe height=498 width=510 src='http://player.youku.com/embed/XMTY4NDA5MjgwMA==' frameborder=0 'allowfullscreen'></iframe>"
+        videoRes: videoJson ? videoJson.videoRes: ""
     })
 })
-
-router.get("/video", (req, res) => {
-    //TODO
-    res.json("<iframe height=498 width=510 src='http://player.youku.com/embed/XMTY4NDA5MjgwMA==' frameborder=0 'allowfullscreen'></iframe>")
-})
-
 module.exports = router;
