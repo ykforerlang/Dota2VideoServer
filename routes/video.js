@@ -23,7 +23,6 @@ router.get("/list", (req, res) => {
         })
         .take(50)
         .value()
-
-    res.json(videos)
+    res.json(videos || [])
 })
 module.exports = router;

@@ -13,8 +13,6 @@ const LimitRequestUtil = require('../utils/LimitRequestUtil')
 const limitReq = new LimitRequestUtil({concurrence_size: 5})
 const moment = require('moment')
 const db = require('../service/db')
-const jsdom = require('jsdom')
-const jquery = require("jquery")
 const videoDb = db.videoDb
 
 function videoTask() {
@@ -26,7 +24,7 @@ function videoTask() {
             const video = bodyJson.videos[i]
             const key = new moment(parseInt(Number(video.addtime) * 1000)).format("YYYY年MM月DD")
             const value = {
-                videoId:i,
+                videoId:169 - i,
                 thumb: `http://${video.thumb_host}${video.thumb_path}`,
                 title: video.video_title,
                 videoRes:'<iframe height=498 width=510 src="http://player.youku.com/embed/XMTY3MDM2ODg4NA==" frameborder=0 allowfullscreen></iframe>',
