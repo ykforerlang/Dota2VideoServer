@@ -18,7 +18,7 @@ DOTA2相关
     队伍信息:http://api.steampowered.com/IDOTA2Teams_570/GetTeamInfo/v1?key={}&league_id=4325<br>
     英雄信息:https://api.steampowered.com/IEconDOTA2_570/GetHeroes/v1/?key={}&language=zh_cn
 ###icon
-     #####联赛
+    ###联赛
      http://api.steampowered.com/IEconItems_570/GetSchemaURL/v1<br>
      https://api.steampowered.com/IEconDOTA2_570/GetTournamentPrizePool/v1?key={}&leagueid=2733<br>
      https://api.steampowered.com/IEconDOTA2_570/GetItemIconPath/v1/?key=<>&format=json&iconname=subscriptions_sdl<br>
