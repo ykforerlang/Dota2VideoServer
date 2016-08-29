@@ -26,4 +26,15 @@ router.get("/list", (req, res) => {
 
     res.json(videos)
 })
+
+router.get("/ykPage", (req, res) => {
+    const {width, height, videoId} = req.query
+    //TODO get src by videoId
+
+    res.render('video', { width,
+        height,
+        src:'http://player.youku.com/embed/XMTY4NDE3Mzk1Ng==',
+    });
+})
+
 module.exports = router;
