@@ -19,7 +19,7 @@ router.get("/detail", (req, res) => {
 
     res.json({
         detail,
-        videoRes: videoJson ? videoJson.videoRes: ""
+        videoId: videoJson ? videoJson.videoId: ""
     })
 })
 module.exports = router;
