@@ -55,30 +55,7 @@ http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key={}&steamids
 ---
 1.express : http://expressjs.com/zh-cn/guide/using-middleware.html<br/>
 2.es6 https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Functions/Arrow_functions<br/>
-3.react相关blog: https://www.kirupa.com/react/events_in_react.htm<br/>
-                 http://browniefed.com/blog/getting-react-art-running-on-react-native/<br/>
-                 http://browniefed.com/blog/2015/10/14/react-native-morphing-svg-paths-with-react-art/<br/>
-                 https://github.com/skv-headless/react-native-scrollable-tab-view<br/>
-                 https://github.com/reactjs<br/>
-                 http://browniefed.com/react-native-animation-book/<br/>
-                 https://leanpub.com/programming-react-native<br/>
-                 http://wiki.jikexueyuan.com/project/react-native/scroll-view.html<br/>
-                 事件合成和事件委托： https://github.com/facebook/react/blob/master/docs/docs/03-interactivity-and-dynamic-uis.zh-CN.md<br/>
-4. ios 首屏： https://github.com/facebook/react-native/issues/1281<br/>
-          http://bbs.reactnative.cn/topic/1850/react-native-ios-%E8%AE%BE%E7%BD%AE-launchscreen  <br/>    
-5. lodash : https://lodash.com/docs<br>
-6. react某些问题: <p>The reason is because components are wrappers for DOM elements.
-     What does it even mean to listen for an event on a component?
-     Once your component gets unwrapped into DOM elements, does the outer HTML element act as the thing you are listening for the event on?
-     Is it some other element?
-     How do you distinguish between listening for an event and declaring a prop you are listening for?
-     (onClick as defined here is simply a property of that component.)
-     There is no clear answer to any of those questions.
-     It's too harsh to say that the solution is to simply not listen to events on components either.
-     Fortunately, there is a workaround where we treat the event handler as a prop and pass it on to the component.
-     Inside the component,
-     we can then assign the event to a DOM element and set the event handler to the the value of the prop we just passed in.
-     I realize that probably makes no sense, so let's walk through an example.</p>
+3. lodash : https://lodash.com/docs<br>
                  
 
 
