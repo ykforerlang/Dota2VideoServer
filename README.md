@@ -51,12 +51,15 @@ http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key={}&steamids
      
 
 
-参考资料：
+###参考资料：
 ---
 1.express : http://expressjs.com/zh-cn/guide/using-middleware.html<br/>
 2.es6 https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Functions/Arrow_functions<br/>
 3. lodash : https://lodash.com/docs<br>
-                 
+
+###TODO
+1.加入轮训
+
 
 
 
