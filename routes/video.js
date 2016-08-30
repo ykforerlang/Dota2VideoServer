@@ -28,15 +28,14 @@ router.get("/list", (req, res) => {
 
 router.get("/ykPage", (req, res) => {
     const {width, height, videoId} = req.query
-    //TODO get src by videoId
+
     const video = videoDb.get('video')
         .find({videoId: parseInt(videoId)})
         .value()
 
-
     res.render('video', { width,
         height,
-        src:video.videoRes,
+        src: video.videoRes,
     });
 })
 
